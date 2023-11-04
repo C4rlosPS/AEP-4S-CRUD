@@ -43,12 +43,13 @@ public class ControllerUser {
             entityManager.getTransaction().begin();
             entityManager.persist(user);
             entityManager.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso!");
 
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
         }
-        JOptionPane.showMessageDialog(null, "Usuário cadastrada com Sucesso");
+        
     }
 
     public void updatePessoa(User user) {
@@ -65,4 +66,19 @@ public class ControllerUser {
         }
     }
     
+     public void deletePessoa(int id) {
+        try {
+            entityManager.getTransaction().begin();
+            User pessoa = entityManager.find(User.class, id);
+            if (pessoa != null) {
+                entityManager.remove(pessoa);
+            }
+            JOptionPane.showMessageDialog(null, "Deletado com Sucesso!");
+            entityManager.getTransaction().commit();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+        }
+    }
 }
