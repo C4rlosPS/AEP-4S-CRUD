@@ -46,6 +46,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jInternalFrame1.setBackground(new java.awt.Color(255, 255, 255));
         jInternalFrame1.setVisible(true);
 
         jLabel2.setFont(new java.awt.Font("SimSun-ExtB", 0, 24)); // NOI18N
@@ -147,6 +148,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void btnConfirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmaActionPerformed
         // TODO add your handling code ere:
         User user = new User();
+        user.setId(0);
         user.setNome(txtNome.getText());
         user.setEmail(txtEmail.getText());
         char[] senha = txtSenha.getPassword();
@@ -197,7 +199,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 new TelaCadastro().setVisible(true);
             }
         });
-    }
+    }    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

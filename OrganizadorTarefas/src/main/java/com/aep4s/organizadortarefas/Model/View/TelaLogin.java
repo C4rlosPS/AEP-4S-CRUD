@@ -4,6 +4,8 @@
  */
 package com.aep4s.organizadortarefas.Model.View;
 
+import java.awt.Font;
+
 /**
  *
  * @author Usuário
@@ -55,6 +57,9 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5MouseEntered(evt);
             }
         });
 
@@ -134,7 +139,15 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
+        TelaCadastro tela = new TelaCadastro();
+        tela.setVisible(true);
+
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
+        // TODO add your handling code here:
+        jLabel5.setText("<html><u><b>Faça seu Cadastro!</b></u></html>");
+    }//GEN-LAST:event_jLabel5MouseEntered
 
     /**
      * @param args the command line arguments
