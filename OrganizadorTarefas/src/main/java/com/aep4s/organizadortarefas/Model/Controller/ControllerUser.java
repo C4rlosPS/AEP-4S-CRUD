@@ -4,7 +4,7 @@
  */
 package com.aep4s.organizadortarefas.Model.Controller;
 
-import com.aep4s.organizadortarefas.Model.User;
+import com.aep4s.organizadortarefas.Model.Pessoa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -38,21 +38,19 @@ public class ControllerUser {
         return entityManager;
     }
 
-    public void inserirUsuario(User user) {
-        try {
+    public void inserirPessoa(Pessoa pessoa){
+        try{
             entityManager.getTransaction().begin();
-            entityManager.persist(user);
+            entityManager.persist(pessoa);
             entityManager.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso!");
-
-        } catch (Exception ex) {
+            
+        }catch (Exception ex){
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
         }
-        
     }
 
-    public void updatePessoa(User user) {
+    public void updatePessoa(Pessoa user) {
         try {
             entityManager.getTransaction().begin();
             entityManager.merge(user); //  merge para atualizar a entidade
@@ -69,7 +67,7 @@ public class ControllerUser {
      public void deletePessoa(int id) {
         try {
             entityManager.getTransaction().begin();
-            User pessoa = entityManager.find(User.class, id);
+            Pessoa pessoa = entityManager.find(Pessoa.class, id);
             if (pessoa != null) {
                 entityManager.remove(pessoa);
             }

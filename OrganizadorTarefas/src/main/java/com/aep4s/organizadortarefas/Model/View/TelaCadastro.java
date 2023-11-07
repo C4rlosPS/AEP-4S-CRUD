@@ -5,7 +5,9 @@
 package com.aep4s.organizadortarefas.Model.View;
 
 import com.aep4s.organizadortarefas.Model.Controller.ControllerUser;
-import com.aep4s.organizadortarefas.Model.User;
+import com.aep4s.organizadortarefas.Model.Pessoa;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -147,18 +149,20 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void btnConfirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmaActionPerformed
         // TODO add your handling code ere:
-        User user = new User();
-        user.setId(0);
+        Pessoa user = new Pessoa();
         user.setNome(txtNome.getText());
         user.setEmail(txtEmail.getText());
         char[] senha = txtSenha.getPassword();
         char[] confSenha = txtConfirmaSenha.getPassword();
-        if(senha == confSenha){
+
+        if (Arrays.equals(senha, confSenha)) {
             user.setSenha(senha);
+            ControllerUser.getInstance().inserirPessoa(user);
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso!");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem.");
         }
-        
-        ControllerUser.getInstance().inserirUsuario(user);
-        this.dispose();
     }//GEN-LAST:event_btnConfirmaActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -199,7 +203,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 new TelaCadastro().setVisible(true);
             }
         });
-    }    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

@@ -10,15 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Usuário
  */
 @Entity
-public class User {
+@Table(name="pessoa")
+public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pessoa")
     private int id;
     @Column(name="nome")
     private String nome;
@@ -26,6 +29,18 @@ public class User {
     private String email;
     @Column(name="senha")
     private char [] senha;
+
+    public Pessoa() {
+    }
+
+    public Pessoa(int id, String nome, String email, char[] senha) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+    
+    
 
     public int getId() {
         return id;
