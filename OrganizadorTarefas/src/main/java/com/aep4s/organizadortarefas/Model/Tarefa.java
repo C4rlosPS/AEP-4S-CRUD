@@ -4,6 +4,7 @@
  */
 package com.aep4s.organizadortarefas.Model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,10 +28,34 @@ public class Tarefa {
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "criada")
-    private Date datacriada;
+    private LocalDate datacriada;
     @Column(name = "vencimento")
-    private Date vence;
+    private String vence;
+    @Column(name = "prioridade")
+    private int prioridade;
+    
 
+    public Tarefa() {
+    }
+
+    public Tarefa(int id, String titulo, String descricao, LocalDate datacriada, String vence, int prioridade) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.datacriada = datacriada;
+        this.vence = vence;
+        this.prioridade = prioridade;
+    }
+
+    
+    public int getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(int prioridade) {
+        this.prioridade = prioridade;
+    }
+    
     public int getId() {
         return id;
     }
@@ -47,7 +72,7 @@ public class Tarefa {
         this.titulo = titulo;
     }
 
-    public String getDescricao() {
+    public String getDescricao(String text) {
         return descricao;
     }
 
@@ -55,19 +80,19 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public Date getDatacriada() {
+    public LocalDate getDatacriada() {
         return datacriada;
     }
 
-    public void setDatacriada(Date datacriada) {
+    public void setDatacriada(LocalDate datacriada) {
         this.datacriada = datacriada;
     }
 
-    public Date getVence() {
+    public String getVence() {
         return vence;
     }
 
-    public void setVence(Date vence) {
+    public void setVence(String vence) {
         this.vence = vence;
     }
 

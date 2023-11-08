@@ -44,7 +44,7 @@ public class ControllerTarefa {
     public List<Tarefa> pesquisarNome(String nome) {
         entityManager.getTransaction().begin();
 
-        String hql = "select t from Tarefas t where t.nome = :nome";
+        String hql = "select t from tarefa t where t.nome = :nome";
 
         Query query = entityManager.createQuery(hql);
 
@@ -57,7 +57,24 @@ public class ControllerTarefa {
         return nomeLista;
     }
 
-    public void inserirTarefa(Tarefa tarefa) {
+    public List<Tarefa> listarTarefas() {
+
+        entityManager.getTransaction().begin();
+
+        String hql = "select t from Tarefa t"; // Seleciona a entidade completa Tarefa
+
+        Query query = entityManager.createQuery(hql);
+
+        List<Tarefa> tarefaLista = query.getResultList();
+
+        entityManager.getTransaction().commit();
+
+        return tarefaLista;
+    }
+
+
+
+public void inserirTarefa(Tarefa tarefa) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(tarefa);
@@ -87,7 +104,11 @@ public class ControllerTarefa {
     public void deletePessoa(int id) {
         try {
             entityManager.getTransaction().begin();
-            Tarefa pessoa = entityManager.find(Tarefa.class, id);
+            Tarefa
+
+pessoa = entityManager.find(Tarefa.class  
+
+, id);
             if (pessoa != null) {
                 entityManager.remove(pessoa);
             }
