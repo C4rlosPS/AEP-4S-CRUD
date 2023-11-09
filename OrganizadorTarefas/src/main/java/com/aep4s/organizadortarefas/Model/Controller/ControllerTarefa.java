@@ -8,6 +8,7 @@ import com.aep4s.organizadortarefas.Model.Tarefa;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
@@ -41,18 +42,18 @@ public class ControllerTarefa {
     }
 
     //neste metodo criamos um stirng sql para fazer a pesquisa por "nome" no banco de dads
-    public List<Tarefa> pesquisarNome(String nome) {
+    public List<Tarefa> pesquisarNome(String titulo) {
         entityManager.getTransaction().begin();
 
-        String hql = "select t from tarefa t where t.nome = :nome";
+        String hql = "select t from tarefa t where t.titulo = :titulo";
 
         Query query = entityManager.createQuery(hql);
 
-        query.setParameter("nome", nome);  // define que o parametro para pesquisa e o nome
+        query.setParameter("nome", titulo); // define que o parametro para pesquisa e o nome
 
         List<Tarefa> nomeLista = query.getResultList();
 
-        entityManager.getTransaction().commit();  // commit da transacao sempre deve ter
+        entityManager.getTransaction().commit(); // commit da transacao sempre deve ter
 
         return nomeLista;
     }
@@ -87,7 +88,7 @@ public void inserirTarefa(Tarefa tarefa) {
         JOptionPane.showMessageDialog(null, "Tarefa cadastrada com Sucesso");
     }
 
-    public void updatePessoa(Tarefa tarefa) {
+    public void updateTarefa(Tarefa tarefa) {
         try {
             entityManager.getTransaction().begin();
             entityManager.merge(tarefa); //  merge para atualizar a entidade
@@ -101,23 +102,31 @@ public void inserirTarefa(Tarefa tarefa) {
         }
     }
 
-    public void deletePessoa(int id) {
-        try {
-            entityManager.getTransaction().begin();
-            Tarefa
+    public void deleteTarefa(String titulo) {
+    try {
+        entityManager.getTransaction().begin();
 
-pessoa = entityManager.find(Tarefa.class  
+        // Crie uma consulta personalizada para encontrar a entidade com base no título
+        Query query = entityManager.createQuery("SELECT t FROM Tarefa t WHERE t.titulo = :titulo");
+        query.setParameter("titulo", titulo);
+        Tarefa tarefa = (Tarefa) query.getSingleResult();
 
-, id);
-            if (pessoa != null) {
-                entityManager.remove(pessoa);
-            }
+        if (tarefa != null) {
+            entityManager.remove(tarefa);
             JOptionPane.showMessageDialog(null, "Deletado com Sucesso");
-            entityManager.getTransaction().commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            entityManager.getTransaction().rollback();
+        } else {
+            JOptionPane.showMessageDialog(null, "Tarefa não encontrada");
         }
+
+        entityManager.getTransaction().commit();
+    } catch (NoResultException ex) {
+        // Trate a exceção caso a entidade não seja encontrada
+        JOptionPane.showMessageDialog(null, "Tarefa não encontrada");
+        entityManager.getTransaction().rollback();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        entityManager.getTransaction().rollback();
     }
+}
 
 }

@@ -92,6 +92,7 @@ public class Menu extends javax.swing.JFrame {
         txtArea.setRows(5);
         jScrollPane1.setViewportView(txtArea);
 
+        jButton1.setFont(new java.awt.Font("SimSun", 0, 14)); // NOI18N
         jButton1.setText("ADICIONAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,10 +100,23 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("SimSun", 0, 14)); // NOI18N
         jButton2.setText("REMOVER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
+        jButton3.setFont(new java.awt.Font("SimSun", 0, 14)); // NOI18N
         jButton3.setText("FINALIZAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
+        jButton4.setFont(new java.awt.Font("SimSun", 0, 14)); // NOI18N
         jButton4.setText("SAIR");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -176,8 +190,29 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        TelaCadastroTarefas cadastroTarefa = new TelaCadastroTarefas();
+        cadastroTarefa.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String titulo = JOptionPane.showInputDialog("Digite o Titulo da Tarefa");
+        ControllerTarefa.getInstance().deleteTarefa(titulo);
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String titulo = JOptionPane.showInputDialog("Digite o Titulo da Tarefa");
+        ControllerTarefa.getInstance().deleteTarefa(titulo);
+        
+        Menu menu = new Menu();
+        menu.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
