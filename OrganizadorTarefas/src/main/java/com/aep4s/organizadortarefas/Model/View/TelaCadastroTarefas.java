@@ -19,6 +19,7 @@ public class TelaCadastroTarefas extends javax.swing.JFrame {
      */
     public TelaCadastroTarefas() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

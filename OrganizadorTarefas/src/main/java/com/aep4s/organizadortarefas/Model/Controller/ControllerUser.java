@@ -7,7 +7,9 @@ package com.aep4s.organizadortarefas.Model.Controller;
 import com.aep4s.organizadortarefas.Model.Pessoa;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,13 +40,13 @@ public class ControllerUser {
         return entityManager;
     }
 
-    public void inserirPessoa(Pessoa pessoa){
-        try{
+    public void inserirPessoa(Pessoa pessoa) {
+        try {
             entityManager.getTransaction().begin();
             entityManager.persist(pessoa);
             entityManager.getTransaction().commit();
-            
-        }catch (Exception ex){
+
+        } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
         }
@@ -63,8 +65,8 @@ public class ControllerUser {
             entityManager.getTransaction().rollback();
         }
     }
-    
-     public void deletePessoa(int id) {
+
+    public void deletePessoa(int id) {
         try {
             entityManager.getTransaction().begin();
             Pessoa pessoa = entityManager.find(Pessoa.class, id);
@@ -73,10 +75,44 @@ public class ControllerUser {
             }
             JOptionPane.showMessageDialog(null, "Deletado com Sucesso!");
             entityManager.getTransaction().commit();
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
         }
     }
+
+    public boolean login(String email, char[] password) {
+        try {
+            entityManager.getTransaction().begin();
+
+            // Crie a consulta HQL para buscar a Pessoa com o email fornecido
+            String hql = "FROM Pessoa p WHERE p.email = :email";
+            TypedQuery<Pessoa> query = entityManager.createQuery(hql, Pessoa.class);
+            query.setParameter("email", email);
+
+            // Obtenha o resultado da consulta
+            Pessoa pessoa = query.getSingleResult();
+
+            // Verifique se a Pessoa foi encontrada e se a senha corresponde
+            if (pessoa != null && pessoa.getSenha().equals(password)) {
+                JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Falha no login. Verifique as credenciais.");
+                return false;
+            }
+        } catch (NoResultException ex) {
+            // Trate a exceção caso a entidade não seja encontrada
+            JOptionPane.showMessageDialog(null, "Email não encontrado. Verifique as credenciais.");
+            return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+            return false;
+        } finally {
+            entityManager.getTransaction().commit();
+        }
+    }
+
 }

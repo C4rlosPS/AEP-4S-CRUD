@@ -5,13 +5,17 @@
 package com.aep4s.organizadortarefas.Model.Controller;
 
 import com.aep4s.organizadortarefas.Model.Tarefa;
+import com.mysql.cj.Session;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
 import javax.swing.JOptionPane;
+
+
 
 /**
  *
@@ -41,21 +45,27 @@ public class ControllerTarefa {
         return entityManager;
     }
 
-    //neste metodo criamos um stirng sql para fazer a pesquisa por "nome" no banco de dads
-    public List<Tarefa> pesquisarNome(String titulo) {
-        entityManager.getTransaction().begin();
+    
+    public List<Tarefa> pesquisarPorTitulo(String titulo) {
+        try {
+            entityManager.getTransaction().begin();
 
-        String hql = "select t from tarefa t where t.titulo = :titulo";
+            // Crie a consulta HQL para pesquisar por título
+            String hql = "FROM Tarefa t WHERE t.titulo = :titulo";
+            Query query = entityManager.createQuery(hql);
+            query.setParameter("titulo", titulo);
 
-        Query query = entityManager.createQuery(hql);
+            // Execute a consulta e obtenha a lista de resultados
+            List<Tarefa> resultados = query.getResultList();
 
-        query.setParameter("nome", titulo); // define que o parametro para pesquisa e o nome
+            entityManager.getTransaction().commit();
 
-        List<Tarefa> nomeLista = query.getResultList();
-
-        entityManager.getTransaction().commit(); // commit da transacao sempre deve ter
-
-        return nomeLista;
+            return resultados;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
+            return null;
+        }
     }
 
     public List<Tarefa> listarTarefas() {
@@ -128,5 +138,19 @@ public void inserirTarefa(Tarefa tarefa) {
         entityManager.getTransaction().rollback();
     }
 }
+    
+    public Tarefa finalizarTarefas(String titulo) {
 
+        entityManager.getTransaction().begin();
+
+        String hql = "select t.titulo from Tarefa t"; // Seleciona a entidade completa Tarefa
+
+        Query query = entityManager.createQuery(hql);
+
+        Tarefa task = (Tarefa) query.getSingleResult();
+
+        entityManager.getTransaction().commit();
+
+        return task;
+    }
 }

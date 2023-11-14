@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author Usuário
  */
 @Entity
-@Table(name="tarefa")
+@Table(name = "tarefa")
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,6 @@ public class Tarefa {
     private String vence;
     @Column(name = "prioridade")
     private int prioridade;
-    
 
     public Tarefa() {
     }
@@ -47,7 +46,6 @@ public class Tarefa {
         this.prioridade = prioridade;
     }
 
-    
     public int getPrioridade() {
         return prioridade;
     }
@@ -55,7 +53,7 @@ public class Tarefa {
     public void setPrioridade(int prioridade) {
         this.prioridade = prioridade;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -63,7 +61,7 @@ public class Tarefa {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getTitulo() {
         return titulo;
     }
@@ -72,7 +70,7 @@ public class Tarefa {
         this.titulo = titulo;
     }
 
-    public String getDescricao(String text) {
+    public String getDescricao() {
         return descricao;
     }
 
@@ -98,10 +96,8 @@ public class Tarefa {
 
     @Override
     public String toString() {
-        return "Tarefa{/n" + "titulo = " + titulo + ", /ndescricao = " + descricao + ", /ndatacriada=" + datacriada + ",/nvence = " + vence + "/n}";
+        return "Tarefa{\n" + "titulo = " + titulo + ", \ndescricao = " + descricao + ", \ndatacriada=" + datacriada + ",\nvence = " + vence + "\n}";
     }
     
     
-    
-            
 }
