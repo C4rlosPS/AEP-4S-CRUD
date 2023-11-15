@@ -5,10 +5,13 @@
 package com.aep4s.organizadortarefas.Model.Controller;
 
 import com.aep4s.organizadortarefas.Model.Pessoa;
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.swing.JOptionPane;
 
@@ -82,37 +85,31 @@ public class ControllerUser {
         }
     }
 
-    public boolean login(String email, char[] password) {
-        try {
-            entityManager.getTransaction().begin();
+    public List<Pessoa> login(String email, String password) {
+        entityManager.getTransaction().begin();
 
-            // Crie a consulta HQL para buscar a Pessoa com o email fornecido
-            String hql = "FROM Pessoa p WHERE p.email = :email";
-            TypedQuery<Pessoa> query = entityManager.createQuery(hql, Pessoa.class);
-            query.setParameter("email", email);
+        // Criando a consulta HQL para buscar a Pessoa com o email
+        String hql = "FROM Pessoa p WHERE p.email = :email";
+        Query query = entityManager.createQuery(hql, Pessoa.class);
+        query.setParameter("email", email);
 
-            // Obtenha o resultado da consulta
-            Pessoa pessoa = query.getSingleResult();
+        // Obtendo o resultado da consulta
+        List<Pessoa> pessoas = query.getResultList();
 
-            // Verifique se a Pessoa foi encontrada e se a senha corresponde
-            if (pessoa != null && pessoa.getSenha().equals(password)) {
-                JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
-                return true;
+        entityManager.getTransaction().commit();
+
+        for (Pessoa pessoa : pessoas) {
+            // Verificar a senha (considerando que a senha está em texto claro no exemplo)
+            if (pessoa.getSenha().equals(password)) {
+                System.out.println("Login bem-sucedido para: " + pessoa.getNome());
+                return Collections.singletonList(pessoa);
             } else {
-                JOptionPane.showMessageDialog(null, "Falha no login. Verifique as credenciais.");
-                return false;
+                System.out.println("Senha incorreta para: " + pessoa.getNome());
             }
-        } catch (NoResultException ex) {
-            // Trate a exceção caso a entidade não seja encontrada
-            JOptionPane.showMessageDialog(null, "Email não encontrado. Verifique as credenciais.");
-            return false;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            entityManager.getTransaction().rollback();
-            return false;
-        } finally {
-            entityManager.getTransaction().commit();
         }
+
+        System.out.println("Nenhuma correspondência encontrada para o e-mail: " + email);
+        return Collections.emptyList();
     }
 
 }

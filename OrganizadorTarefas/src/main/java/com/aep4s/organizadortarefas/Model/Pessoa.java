@@ -28,12 +28,12 @@ public class Pessoa {
     @Column(name="email")
     private String email;
     @Column(name="senha")
-    private char [] senha;
+    private String senha;
 
     public Pessoa() {
     }
 
-    public Pessoa(int id, String nome, String email, char[] senha) {
+    public Pessoa(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -66,11 +66,11 @@ public class Pessoa {
         this.email = email;
     }
 
-    public char[] getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(char[] senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

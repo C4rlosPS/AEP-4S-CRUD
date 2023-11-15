@@ -163,10 +163,10 @@ public class TelaCadastro extends javax.swing.JFrame {
         Pessoa user = new Pessoa();
         user.setNome(txtNome.getText());
         user.setEmail(txtEmail.getText());
-        char[] senha = txtSenha.getPassword();
-        char[] confSenha = txtConfirmaSenha.getPassword();
+        String senha = String.valueOf(txtSenha.getPassword());
+        String confSenha = String.valueOf(txtConfirmaSenha.getPassword());
 
-        if (Arrays.equals(senha, confSenha)) {
+        if (senha.equals(confSenha)) {
             user.setSenha(senha);
             ControllerUser.getInstance().inserirPessoa(user);
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso!");

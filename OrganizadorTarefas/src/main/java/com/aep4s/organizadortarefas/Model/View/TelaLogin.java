@@ -5,7 +5,10 @@
 package com.aep4s.organizadortarefas.Model.View;
 
 import com.aep4s.organizadortarefas.Model.Controller.ControllerUser;
+import com.aep4s.organizadortarefas.Model.Pessoa;
 import java.awt.Font;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -189,14 +192,14 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String user = txtUser.getText();
-        char[] pass = txtPass.getPassword();
+        String pass = String.valueOf(txtPass.getPassword());
         
-        boolean log = ControllerUser.getInstance().login(user, pass);
+        List<Pessoa> log = ControllerUser.getInstance().login(user, pass);
         
-        if(log){
-        Menu menu = new Menu();
-        menu.setVisible(true);
-        this.dispose();
+        if(log != null){
+            Menu menu = new Menu();
+            menu.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

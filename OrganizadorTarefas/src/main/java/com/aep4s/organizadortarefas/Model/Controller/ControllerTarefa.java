@@ -6,6 +6,8 @@ package com.aep4s.organizadortarefas.Model.Controller;
 
 import com.aep4s.organizadortarefas.Model.Tarefa;
 import com.mysql.cj.Session;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -77,7 +79,8 @@ public class ControllerTarefa {
         Query query = entityManager.createQuery(hql);
 
         List<Tarefa> tarefaLista = query.getResultList();
-
+        
+        Collections.sort(tarefaLista, Comparator.comparingInt(Tarefa::getPrioridade));
         entityManager.getTransaction().commit();
 
         return tarefaLista;
