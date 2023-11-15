@@ -101,14 +101,12 @@ public class ControllerUser {
         for (Pessoa pessoa : pessoas) {
             // Verificar a senha (considerando que a senha está em texto claro no exemplo)
             if (pessoa.getSenha().equals(password)) {
-                System.out.println("Login bem-sucedido para: " + pessoa.getNome());
+               
                 return Collections.singletonList(pessoa);
-            } else {
-                System.out.println("Senha incorreta para: " + pessoa.getNome());
             }
         }
 
-        System.out.println("Nenhuma correspondência encontrada para o e-mail: " + email);
+ 
         return Collections.emptyList();
     }
 

@@ -225,7 +225,7 @@ public class Menu extends javax.swing.JFrame {
 
     if (!resultado.isEmpty()) {
         for (Tarefa tarefa : resultado) {
-            mensagem.append("ID: ").append(tarefa.getId()).append(", Título: ").append(tarefa.getTitulo()).append("\n");
+            mensagem.append("ID: ").append(tarefa.getId()).append(",\nTítulo: ").append(tarefa.getTitulo()).append(",\nDescrição: ").append(tarefa.getDescricao()).append(",\nData Vencimento: ").append(tarefa.getVence());
         }
     } else {
         mensagem.append("Nenhuma tarefa encontrada com o título: ").append(titulo);
